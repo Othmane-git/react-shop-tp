@@ -3,10 +3,6 @@ import Pagination from '../Pagination/Pagination.jsx'
 import { useProducts, PAGE_SIZE } from '../../hooks/useProducts.js'
 import { useCartContext } from '../../context/CartContext.jsx'
 
-const products = [
-  { id: 1, title: 'Produit test', price: 9.99, thumbnail: 'https://placehold.co/300x200', rating: 4.5 }
-]
-
 /**
  * ProductList — grille de produits avec pagination.
  *
@@ -21,7 +17,7 @@ export default function ProductList({ searchQuery, currentPage, onPageChange }) 
   // Remplacer les 4 lignes ci-dessous par :
   //   const { products, total, loading, error } = useProducts(searchQuery, currentPage)
   // =============================================================
-  const products = []
+ const { products, total, loading, error } = useProducts(searchQuery, currentPage)
   const total = 0
   const loading = false
   const error = null

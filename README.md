@@ -115,7 +115,7 @@ et `src/components/ProductList/ProductList.jsx`
 Expliquer en 2-3 phrases. Pourquoi pose-t-il problème quand l'arbre de composants est profond ?
 
 <!-- RÉPONSE Q2.1 -->
-
+Le props drilling consiste à faire passer une prop à travers plusieurs composants intermédiaires qui ne s'en servent pas, juste pour l'amener à un composant profond. Ça alourdit le code, couple les composants à des props inutiles et devient vite ingérable quand l'arbre est profond.
 ---
 
 ### Q2.2 — Montrer le rendu de la grille
@@ -124,7 +124,11 @@ Coller ici la partie JSX du `.map()` dans `ProductList`.
 
 ```jsx
 // RÉPONSE Q2.2 — votre map ici
-
+{products.map((product) => (
+  <div key={product.id} className="col">
+    <ProductCard product={product} onAddToCart={addToCart} />
+  </div>
+))}
 ```
 
 ---
@@ -133,7 +137,7 @@ Coller ici la partie JSX du `.map()` dans `ProductList`.
 
 <!-- RÉPONSE Q2.3 -->
 ![Grille de produits](docs/screenshots/step2-grid.png)
-
+![](screenshots/product.png)
 ---
 
 ## Étape 3 — `useEffect` : chargement des données

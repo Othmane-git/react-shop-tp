@@ -21,7 +21,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         className="btn btn-outline-secondary"
         disabled={currentPage === 1}
-        onClick={undefined /* TODO : onPageChange(currentPage - 1) */}
+        onClick={() => onPageChange(currentPage - 1)}
       >
         <i className="bi bi-chevron-left me-1"></i>Précédent
       </button>
@@ -33,7 +33,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }) {
       <button
         className="btn btn-outline-secondary"
         disabled={currentPage === totalPages}
-        onClick={undefined /* TODO : onPageChange(currentPage + 1) */}
+        onClick={() => onPageChange(currentPage + 1)}
       >
         Suivant<i className="bi bi-chevron-right ms-1"></i>
       </button>
