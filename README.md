@@ -411,7 +411,7 @@ Cocher chaque case après vérification :
 ### Q7.1 — Bilan : quel hook vous a semblé le plus difficile à comprendre et pourquoi ?
 
 <!-- RÉPONSE Q7.1 -->
-
+Le plus difficile : useCallback/useMemo. Leur effet n'est pas visible à l'écran (contrairement à useState ou useEffect) ; leur but est la stabilité des références et l'évitement de recalculs, ce qui reste abstrait tant qu'on n'a pas vu les rendus inutiles qu'ils empêchent.
 ---
 
 ### Q7.2 — Capture d'écran finale
