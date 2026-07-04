@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useDebounce } from './hooks/useDebounce.js'
 import NavBar from './components/NavBar/NavBar.jsx'
 import Footer from './components/Footer/Footer.jsx'
 import ProductList from './components/ProductList/ProductList.jsx'
@@ -8,6 +9,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState('')
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [currentPage, setCurrentPage] = useState(1)
+  const debouncedQuery = useDebounce(searchQuery, 400)
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -22,7 +24,7 @@ export default function App() {
 
       <main className="flex-grow-1 container py-4">
         <ProductList
-          searchQuery={searchQuery}
+          searchQuery={debouncedQuery}
           currentPage={currentPage}
           onPageChange={(page) => setCurrentPage(page)}
         />

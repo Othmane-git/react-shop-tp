@@ -202,7 +202,7 @@ Joindre une capture montrant la page 2 chargée.
 
 <!-- RÉPONSE Q3.4 -->
 ![Produits page 2](docs/screenshots/step3-page2.png)
-
+![](screenshots/productslist.png)
 ---
 
 ## Étape 4 — Hook personnalisé `useDebounce`
