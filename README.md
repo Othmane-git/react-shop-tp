@@ -85,7 +85,6 @@ Cliquer sur le bouton « Panier » puis sur « Fermer ».
 Joindre une capture montrant la modale ouverte (panier vide).
 
 <!-- RÉPONSE Q1.3 — insérer l'image ci-dessous -->
-![Modale ouverte](docs/screenshots/step1-modal.png)
 ![](screenshots/opencart.png)
 ![](screenshots/closecart.png)
 ---
@@ -136,7 +135,6 @@ Coller ici la partie JSX du `.map()` dans `ProductList`.
 ### Q2.3 — Capture d'écran : la grille avec le produit fictif
 
 <!-- RÉPONSE Q2.3 -->
-![Grille de produits](docs/screenshots/step2-grid.png)
 ![](screenshots/product.png)
 ---
 
@@ -201,7 +199,6 @@ useEffect(() => {
 Joindre une capture montrant la page 2 chargée.
 
 <!-- RÉPONSE Q3.4 -->
-![Produits page 2](docs/screenshots/step3-page2.png)
 ![](screenshots/productslist.png)
 ---
 
@@ -226,7 +223,7 @@ Passer `debouncedQuery` (et non `searchQuery`) à `ProductList`.
 Décrire ce qui se passerait sans debounce quand l'utilisateur tape rapidement.
 
 <!-- RÉPONSE Q4.1 -->
-
+Le debounce retarde la prise en compte d'une valeur jusqu'à une pause de frappe. Sans lui, chaque lettre déclencherait une requête (taper « phone » = 5 requêtes) : gaspillage réseau et risque d'afficher des résultats obsolètes.
 ---
 
 ### Q4.2 — Quel est le rôle de la fonction de nettoyage (cleanup) retournée par `useEffect` ?
@@ -234,14 +231,21 @@ Décrire ce qui se passerait sans debounce quand l'utilisateur tape rapidement.
 Expliquer pourquoi `return () => clearTimeout(timer)` est indispensable dans ce cas précis.
 
 <!-- RÉPONSE Q4.2 -->
-
+Avant chaque nouvelle frappe, React relance l'effet et appelle d'abord le cleanup, qui annule le timer précédent avec clearTimeout. Sans lui, tous les timers s'accumuleraient et se déclencheraient tous → le debounce ne servirait à rien.
 ---
 
 ### Q4.3 — Montrer votre implémentation complète de `useDebounce`
 
 ```js
 // RÉPONSE Q4.3 — useDebounce complet
-
+export function useDebounce(value, delay) {
+  const [debouncedValue, setDebouncedValue] = useState(value)
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay)
+    return () => clearTimeout(timer)
+  }, [value, delay])
+  return debouncedValue
+}
 ```
 
 ---
@@ -252,8 +256,7 @@ Ouvrir l'onglet Réseau du navigateur, taper rapidement « phone » lettre par l
 Joindre une capture montrant qu'une seule requête est envoyée après la pause.
 
 <!-- RÉPONSE Q4.4 -->
-![Debounce réseau](docs/screenshots/step4-debounce.png)
-
+![](screenshots/useDebounce.png)
 ---
 
 ## Étape 5 — Hook personnalisé `useCart` : `useCallback` + `useMemo`
@@ -279,7 +282,7 @@ Quel problème survient si ces fonctions sont recréées à chaque rendu ?
 En quoi cela est-il particulièrement problématique quand elles sont passées via un contexte ?
 
 <!-- RÉPONSE Q5.1 -->
-
+Sans useCallback, ces fonctions sont recréées (nouvelle référence) à chaque rendu. Passées via un contexte, la valeur du contexte change à chaque rendu, tous les consommateurs se re-rendent inutilement et les optimisations type React.memo sont cassées.
 ---
 
 ### Q5.2 — Pourquoi utiliser `useMemo` pour `cartCount` et `cartTotal` ?
@@ -287,7 +290,7 @@ En quoi cela est-il particulièrement problématique quand elles sont passées v
 Quelle est la différence entre `useMemo` et `useCallback` ?
 
 <!-- RÉPONSE Q5.2 -->
-
+useMemo mémorise une valeur calculée, useCallback mémorise une fonction. On mémorise cartCount/cartTotal avec useMemo pour ne refaire les reduce que quand cart change, pas à chaque rendu.
 ---
 
 ### Q5.3 — Montrer votre implémentation de `addToCart` avec `useCallback`
@@ -297,7 +300,17 @@ que d'ajouter un doublon.
 
 ```js
 // RÉPONSE Q5.3 — addToCart avec useCallback
-
+const addToCart = useCallback((product) => {
+  setCart((prev) => {
+    const existing = prev.find((item) => item.id === product.id)
+    if (existing) {
+      return prev.map((item) =>
+        item.id === product.id ? { ...item, qty: item.qty + 1 } : item
+      )
+    }
+    return [...prev, { ...product, qty: 1 }]
+  })
+}, [])
 ```
 
 ---
@@ -308,7 +321,7 @@ Ajouter 2-3 produits, rafraîchir la page (F5), vérifier que le panier est rest
 Joindre une capture de l'onglet Application > localStorage dans les DevTools.
 
 <!-- RÉPONSE Q5.4 -->
-![localStorage](docs/screenshots/step5-localstorage.png)
+![](screenshots/localstorage.png)
 
 ---
 
