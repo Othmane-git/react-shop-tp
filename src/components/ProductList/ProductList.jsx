@@ -17,7 +17,7 @@ export default function ProductList({ searchQuery, currentPage, onPageChange }) 
   // Remplacer les 4 lignes ci-dessous par :
   //   const { products, total, loading, error } = useProducts(searchQuery, currentPage)
   // =============================================================
- const { products, total, loading, error } = useProducts(searchQuery, currentPage)
+  const { products, total, loading, error } = useProducts(searchQuery, currentPage)
 
   // =============================================================
   // TODO Étape 6 — useContext
@@ -69,18 +69,13 @@ export default function ProductList({ searchQuery, currentPage, onPageChange }) 
               </div>
             ))}
           </div>
-
-          {/* =============================================================
-              TODO Étape 3
-              Afficher la pagination quand totalPages > 1 :
-                {totalPages > 1 && (
-                  <Pagination
-                    currentPage={currentPage}
-                    totalPages={totalPages}
-                    onPageChange={onPageChange}
-                  />
-                )}
-              ============================================================= */}
+          {totalPages > 1 && (
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
+          )}
         </>
       )}
     </div>
