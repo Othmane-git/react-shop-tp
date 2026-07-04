@@ -160,7 +160,7 @@ Expliquer pourquoi on ne peut pas placer un `fetch()` directement dans le corps
 du composant (ou du hook). Quel problème cela provoquerait-il ?
 
 <!-- RÉPONSE Q3.1 -->
-
+Le corps du composant s'exécute à chaque rendu et doit rester pur. Un fetch() direct partirait à chaque rendu, et le setState du résultat provoquerait un nouveau rendu → une boucle infinie de requêtes. useEffect isole cet effet de bord et contrôle quand il s'exécute.
 ---
 
 ### Q3.2 — Quel est le rôle du tableau de dépendances `[searchQuery, page]` ?
@@ -169,14 +169,29 @@ Que se passerait-il si ce tableau était vide `[]` ?
 Et si on l'omettait complètement ?
 
 <!-- RÉPONSE Q3.2 -->
-
+Le tableau [searchQuery, page] relance l'effet seulement quand la recherche ou la page change. Avec [], il ne s'exécuterait qu'une seule fois (aucun rechargement au changement de page/recherche). En l'omettant complètement, il s'exécuterait à chaque rendu → boucle infinie.
 ---
 
 ### Q3.3 — Montrer votre implémentation du `useEffect` dans `useProducts`
 
 ```js
 // RÉPONSE Q3.3 — votre useEffect ici
-
+useEffect(() => {
+  setLoading(true)
+  setError(null)
+  const skip = (page - 1) * PAGE_SIZE
+  const url = searchQuery
+    ? `${BASE_URL}/search?q=${searchQuery}&limit=${PAGE_SIZE}&skip=${skip}`
+    : `${BASE_URL}?limit=${PAGE_SIZE}&skip=${skip}`
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      setProducts(data.products)
+      setTotal(data.total)
+    })
+    .catch(() => setError('Erreur lors du chargement des produits'))
+    .finally(() => setLoading(false))
+}, [searchQuery, page])
 ```
 
 ---

@@ -18,9 +18,6 @@ export default function ProductList({ searchQuery, currentPage, onPageChange }) 
   //   const { products, total, loading, error } = useProducts(searchQuery, currentPage)
   // =============================================================
  const { products, total, loading, error } = useProducts(searchQuery, currentPage)
-  const total = 0
-  const loading = false
-  const error = null
 
   // =============================================================
   // TODO Étape 6 — useContext
