@@ -34,7 +34,7 @@ export default function ProductCard({ product, onAddToCart }) {
             ============================================================= */}
         <button
           className="btn btn-primary btn-sm"
-          onClick={undefined /* TODO */}
+          onClick={() => onAddToCart(product)}
         >
           <i className="bi bi-cart-plus me-1"></i>Ajouter au panier
         </button>

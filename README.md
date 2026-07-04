@@ -63,7 +63,7 @@ Expliquer en 2-3 phrases le rôle de `useState` et pourquoi React nécessite ce
 hook plutôt qu'une simple variable JavaScript.
 
 <!-- RÉPONSE Q1.1 -->
-
+permet à un composant de mémoriser une valeur entre les rendus et de la modifier. Une variable normale est réinitialisée à chaque rendu et ne prévient pas React ; appeler le setter d'un état déclenche un nouveau rendu pour mettre à jour l'affichage.
 ---
 
 ### Q1.2 — Montrer votre implémentation des trois `useState`
@@ -72,7 +72,9 @@ Coller ici l'extrait de code correspondant aux trois déclarations d'état dans 
 
 ```jsx
 // RÉPONSE Q1.2 — vos trois useState ici
-
+const [searchQuery, setSearchQuery] = useState('')
+const [isCartOpen, setIsCartOpen] = useState(false)
+const [currentPage, setCurrentPage] = useState(1)
 ```
 
 ---
@@ -84,7 +86,8 @@ Joindre une capture montrant la modale ouverte (panier vide).
 
 <!-- RÉPONSE Q1.3 — insérer l'image ci-dessous -->
 ![Modale ouverte](docs/screenshots/step1-modal.png)
-
+![](screenshots/opencart.png)
+![](screenshots/closecart.png)
 ---
 
 ## Étape 2 — Composants `ProductCard` et `ProductList`

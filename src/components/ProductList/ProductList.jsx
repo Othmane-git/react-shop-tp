@@ -3,6 +3,10 @@ import Pagination from '../Pagination/Pagination.jsx'
 import { useProducts, PAGE_SIZE } from '../../hooks/useProducts.js'
 import { useCartContext } from '../../context/CartContext.jsx'
 
+const products = [
+  { id: 1, title: 'Produit test', price: 9.99, thumbnail: 'https://placehold.co/300x200', rating: 4.5 }
+]
+
 /**
  * ProductList — grille de produits avec pagination.
  *
@@ -27,7 +31,7 @@ export default function ProductList({ searchQuery, currentPage, onPageChange }) 
   // Remplacer la ligne ci-dessous par :
   //   const { addToCart } = useCartContext()
   // =============================================================
-  const addToCart = () => {}
+  const addToCart = () => { }
 
   const totalPages = Math.ceil(total / PAGE_SIZE)
 
@@ -65,9 +69,13 @@ export default function ProductList({ searchQuery, currentPage, onPageChange }) 
                   ))}
                 </div>
               ============================================================= */}
-          <p className="text-center text-muted">
-            TODO Étape 2 : afficher les {products.length} produits ici.
-          </p>
+          <div className="row row-cols-1 row-cols-md-3 row-cols-lg-4 g-4">
+            {products.map((product) => (
+              <div key={product.id} className="col">
+                <ProductCard product={product} onAddToCart={addToCart} />
+              </div>
+            ))}
+          </div>
 
           {/* =============================================================
               TODO Étape 3
