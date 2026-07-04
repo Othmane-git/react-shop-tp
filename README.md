@@ -343,14 +343,14 @@ Tracer le chemin qu'aurait dû suivre `addToCart` sans contexte (de `App` jusqu'
 Comparer avec le chemin avec `useContext`.
 
 <!-- RÉPONSE Q6.1 -->
-
+Sans contexte, addToCart devrait descendre App → ProductList → ProductCard, en traversant ProductList qui ne s'en sert pas (props drilling). Avec useContext, chaque composant lit addToCart directement depuis le contexte, sans passer par les intermédiaires.
 ---
 
 ### Q6.2 — Montrer l'appel à `useCartContext()` dans `CartModal`
 
 ```jsx
 // RÉPONSE Q6.2 — destructuration depuis useCartContext()
-
+const { cart, removeFromCart, clearCart, cartTotal } = useCartContext()
 ```
 
 ---
@@ -361,7 +361,16 @@ Coller ici le JSX d'un `<li>` de la liste, avec le titre, la quantité, le prix 
 
 ```jsx
 // RÉPONSE Q6.3 — JSX d'un article du panier
-
+<li key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
+  <div>
+    <span className="fw-semibold">{item.title}</span>
+    <br />
+    <small className="text-muted">Qté : {item.qty} × {item.price.toFixed(2)} $</small>
+  </div>
+  <button className="btn btn-sm btn-outline-danger" onClick={() => removeFromCart(item.id)}>
+    <i className="bi bi-trash"></i>
+  </button>
+</li>
 ```
 
 ---
@@ -373,8 +382,7 @@ Joindre une capture montrant : le badge correct sur le bouton, les articles list
 avec leurs quantités et le total affiché.
 
 <!-- RÉPONSE Q6.4 -->
-![Panier fonctionnel](docs/screenshots/step6-cart.png)
-
+![](screenshots/cart.png)
 ---
 
 ## Étape 7 — Finitions et vérifications

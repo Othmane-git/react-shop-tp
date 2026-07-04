@@ -15,7 +15,7 @@ export default function NavBar({ searchQuery, onSearchChange, onCartClick }) {
   // Remplacer la ligne ci-dessous par :
   //   const { cartCount } = useCartContext()
   // =============================================================
-  const { cartCount } = { cartCount: 0 }
+  const { cartCount } = useCartContext()
 
   return (
     <nav className="navbar navbar-dark bg-dark px-3 gap-3">
